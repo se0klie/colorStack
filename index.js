@@ -28,7 +28,7 @@ colorMode.addEventListener("change", function(){
             document.body.classList.remove("dark");
             document.getElementById('colorInput').style.backgroundColor ='#FEFDED';
             document.getElementById('hexCode').style.backgroundColor ='#FEFDED';
-
+            document.getElementById('head').style.color='#FA7070';
             document.getElementById('colorInput').style.color ='black';
             document.getElementById('hexCode').style.color ='black';
             break;
@@ -36,6 +36,7 @@ colorMode.addEventListener("change", function(){
             
 
         case 'dark':
+            document.getElementById('head').style.color='#FEFDED';
             document.documentElement.classList.add("dark");
             document.body.classList.add("dark");
             document.documentElement.classList.remove("light");
