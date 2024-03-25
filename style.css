@@ -1,4 +1,5 @@
 @media only screen and (max-width:500px){
+    
     #colorPicker{
         width: 50px;
     }
@@ -13,15 +14,21 @@
     label{
         font-size: larger;
     }
-    p{
+    #infoColor{
         margin: 5px 5px 5px 5px;
         text-align:justify ;
     }
     #header{
-        gap: 95px;
+        gap: 8px;
         align-items: center;
         justify-content: center;
     }
+    
+#colorsDiv {
+    grid-template-columns: auto auto auto;
+    justify-content: center;
+    align-items: center;
+}
 }
 @media only screen and (min-width:500px){
     #header{
