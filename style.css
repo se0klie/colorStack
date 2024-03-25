@@ -1,0 +1,175 @@
+@media only screen and (max-width:500px){
+    #colorPicker{
+        width: 50px;
+    }
+    input{
+        width: 125px;
+    }
+    #colorChosenInput{
+        width: 50px;
+        height: 50px;
+        margin-right: 5px;
+    }
+    label{
+        font-size: larger;
+    }
+    p{
+        margin: 0px 0px 5px 5px;
+        text-align:justify ;
+    }
+    #header{
+        gap: 95px;
+        align-items: center;
+        justify-content: center;
+    }
+}
+@media only screen and (min-width:500px){
+    #header{
+        /* grid; */
+    }
+}
+.light{
+    background-color: #FEFDED;
+    #colorMode{
+        background-color: #FA7070;
+        color: #FEFDED
+    }
+    #hexCode{
+        background-color: '#FEFDED';
+    }
+    #colorInput{
+        background-color: '#FEFDED';
+    }
+}
+
+.dark{
+    background-color: #16213E;
+    color: #ffffff;
+    #colorMode{
+        background-color: #E94560;
+        color: #FEFDED;
+    }
+    #hexCode{
+        background-color: '#16213E';
+    }
+    #colorInput{
+        background-color: '#16213E';
+    }
+}
+#colorInput{
+    padding: auto;
+    border-radius: 5px;
+    background-color: '#FEFDED';
+}
+#hexCode{
+    background-color: '#FEFDED';
+}
+input{
+    border: 0px;;
+    border-radius: 5px;;
+}
+.elementHeader{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+#header{
+    grid-template-columns:auto 100px;
+    align-self: center;
+    justify-content: center none;
+    /* align-items: center; */
+}
+
+#colorMode{
+    border: 0px;
+    border-radius: 100px;
+    padding: 10px;
+    
+}
+p{
+    margin: 0px 8px 5px 5px;
+    text-align:justify ;
+}
+label{
+    width: fit-content;
+    font-size: 20px;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+h1{
+    font-family: "Londrina Solid", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 40px;
+    color: #FA7070;
+}
+#hexCodeSection{
+    margin: 5px 5px 5px 0px;
+    align-items: center;
+    padding-left: 0px;
+}
+
+button{
+    border-radius: 5px;
+    line-height:normal;
+}
+@media (min-width: 576px) {
+    .container,
+    .container-sm {
+        max-width: none; /* Override max-width */
+        margin-left: 0%;
+        padding-left: 0%;
+        margin: px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+}
+
+.peralta-regular {
+    font-family: "Peralta", serif;
+    font-weight: 400;
+    font-style: normal;
+  }
+  
+html{
+    background-color: #FFFFFF;
+    margin: 10px;;
+}
+
+
+.container{
+    gap:5px;
+}
+
+#colorPickerSection{
+    margin:5px;
+    display: flex;
+        align-items: center;
+        gap:5px
+}
+#colorChosenInput{
+    border-radius: 50%;
+    background-color: white;
+    height: 30px;
+    margin: 5px;
+    width: 30px;
+    border-color:gray;
+    border-width: 3px;
+    border-style: solid;
+}
+
+.colors{
+    height: 100px;
+    width: 100px;
+    border-radius: 10px;
+}
+.grid-container{
+    display: grid;
+    grid-template-columns: auto auto auto;
+    padding: 10px;
+    gap:10px;
+    align-items: center;
+    align-content: center;
+    justify-content: center;
+    width: fit-content;
+}
