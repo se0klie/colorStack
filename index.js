@@ -1,16 +1,92 @@
+import ColorThief from './node_modules/colorthief/dist/color-thief.mjs'
+const colorThief = new ColorThief();
 var dropdown = document.getElementById('options');
-var colors = [];
+const colors = [];
 var selectedColor = "#0000ff";
+
+var fromColor = document.getElementById("getFromColor");
+var fromImage = document.getElementById("getFromImage");
 
 var colorPickerSection = document.getElementById('colorPickerSection');
 var hexCodeSection = document.getElementById('hexCodeSection');
 var useColorPickerBtn = document.getElementById('useColorPickerBtn');
 var useHexCodeBtn = document.getElementById('useHexCodeBtn');
 
+var imageFromUser = document.getElementById("imageFromUser");
 var infoColors = document.getElementById("infoColor");
 var colorMode = document.getElementById('colorMode');
 
 var colorPicker = document.getElementById('colorPicker');
+
+function rgbToHex(r, g, b) {
+    const componentToHex = (c) => {
+        const hex = c.toString(16);
+        return hex.length === 1 ? '0' + hex : hex;
+    };
+    return '#' + componentToHex(r) + componentToHex(g) + componentToHex(b);
+}
+
+
+fromColor.addEventListener("click",function(){
+    document.getElementById("fromColor").style.display = "block";
+    document.getElementById("fromImage").style.display = "none";
+});
+
+fromImage.addEventListener("click", function(){
+    document.getElementById("fromColor").style.display = "none";
+    document.getElementById("fromImage").style.display = "block";
+});
+
+
+
+imageFromUser.addEventListener('change', function(event) {
+    // Get the selected file from the input element
+    const file = event.target.files[0];
+    const numberOfColors = 4;
+
+    // Clear the colors array before populating it with new colors
+    colors.length = 0;
+
+    // Check if a file was selected
+    if (file) {
+        // Create a FileReader object
+        const reader = new FileReader();
+
+        // Set up the FileReader to read the selected file
+        reader.readAsDataURL(file);
+
+        // Define what to do when the FileReader has finished loading the file
+        reader.onload = function() {
+            // Create a new Image element
+            const imageElement = document.getElementById("userImage");
+            
+            // Set the src attribute of the image element to the data URL of the selected file
+            imageElement.onload = function() {
+                imageElement.style.display = "block";
+                // Once the image has loaded, pass it to ColorThief to get the palette
+                const paletteCopy = colorThief.getPalette(imageElement, numberOfColors); // Get a palette of 4 colors
+                
+                // Copy the paletteCopy array to the colors array
+                processColor(paletteCopy,numberOfColors);
+                
+            };
+            
+            imageElement.src = reader.result;
+        };
+    }
+});
+
+
+function processColor(paletteCopy,numberOfColors){
+    for(let i=0;i<=numberOfColors;i++){
+        let currentColor = paletteCopy[i];
+        if(currentColor){
+            var color = rgbToHex(currentColor[0],currentColor[1],currentColor[2]);
+            colors.push(color);
+        };
+    };
+};
+
 
 colorMode.addEventListener("change", function(){
     if(useColorPickerBtn.classList.contains('btn-primary')){

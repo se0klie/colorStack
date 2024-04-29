@@ -19,9 +19,17 @@
                 <option value="light" class="light">Light</option>
                 <option value="dark" class="dark">Dark</option>
             </select>
+            <div style="display: flex; gap:5px; justify-content: center;">
+                <button id="getFromColor">Get from color</button>
+                <button id="getFromImage">Get from image</button>
+                <button id="getFromURL">Get from URL</button>
+                <button id="getFromClipboard">Get from clipboard</button>
+            </div>
         </div>
+        
     </head>
     <body class="light">
+        <div id="fromColor" style="display: block;">
         <div id="colorPickerSection">
             <label for="colorPicker">Color Picker:</label>
             <input type="color" id="colorPicker" value="#0000ff">
@@ -66,12 +74,22 @@
         </div>
         <br>
         <hr>
+    </div>
+
+    <div id="fromImage" style="display: none; justify-content: center;">
+        <br>
+        <input id="imageFromUser" type="file" accept="image/*" />
+        <img style="display: none;" src="#" id="userImage">
+    </div>
+    <br>
         <footer style="display: flex; justify-content: center;"> 
             <h6 style="justify-content: center; align-self: center; align-content: center;">© All rights reserved : se0klie on <a href="https://github.com/se0klie">github</a>
             </h6>
         </footer>
+        
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/tinycolor/1.4.2/tinycolor.min.js"></script>
-        <script src="index.js"></script>
+        <script src="index.js" type="module"></script>
+    
     </body>
 </html>

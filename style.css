@@ -23,6 +23,9 @@
         align-items: center;
         justify-content: center;
     }
+    img{
+        height: 100px;
+    }
     
 #colorsDiv {
     grid-template-columns: auto auto auto;
@@ -179,4 +182,10 @@ html{
     align-content: center;
     justify-content: center;
     width: fit-content;
+}
+
+img{
+    padding: 5px 0px 5px 0px;
+    height: 350px;
+    
 }
