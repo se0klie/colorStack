@@ -34,6 +34,11 @@
     align-items: center;
 }
 }
+@media only screen and (min-width:500px){
+    #header{
+        /* grid; */
+    }
+}
 .light{
     background-color: #FEFDED;
     #colorMode{
@@ -61,6 +66,20 @@
     #colorInput{
         background-color: '#16213E';
     }
+}
+
+.divOfDivs{
+    max-width: 600px;
+    display: flex;
+    gap: 5px;
+}
+#fromImage{
+    display: flex;
+    justify-content: center;
+}
+#imageFromUser{
+    justify-content: center;
+    align-items: center;
 }
 #colorInput{
     padding: auto;

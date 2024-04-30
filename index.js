@@ -34,17 +34,21 @@ fromColor.addEventListener("click",function(){
 fromImage.addEventListener("click", function(){
     document.getElementById("fromColor").style.display = "none";
     document.getElementById("fromImage").style.display = "block";
+    
 });
 
 
 
 imageFromUser.addEventListener('change', function(event) {
+     // Clear the colors array before populating it with new colors
+     colors.splice(0, colors.length);
+     divOfDivs.replaceChildren();
+
     // Get the selected file from the input element
     const file = event.target.files[0];
     const numberOfColors = 4;
 
-    // Clear the colors array before populating it with new colors
-    colors.length = 0;
+   
 
     // Check if a file was selected
     if (file) {
@@ -61,7 +65,7 @@ imageFromUser.addEventListener('change', function(event) {
             
             // Set the src attribute of the image element to the data URL of the selected file
             imageElement.onload = function() {
-                imageElement.style.display = "block";
+                imageElement.style.display = "flex";
                 // Once the image has loaded, pass it to ColorThief to get the palette
                 const paletteCopy = colorThief.getPalette(imageElement, numberOfColors); // Get a palette of 4 colors
                 
@@ -82,11 +86,20 @@ function processColor(paletteCopy,numberOfColors){
         if(currentColor){
             var color = rgbToHex(currentColor[0],currentColor[1],currentColor[2]);
             colors.push(color);
+            createDivs(color);
         };
     };
 };
-
-
+const divOfDivs = document.getElementById('divOfDivs2');
+function createDivs(color){
+    
+    const div = document.createElement('div');
+    const number = colors.length;
+    div.style.background = color;
+    div.classList.add("colors");
+    divOfDivs.appendChild(div);
+    
+}
 colorMode.addEventListener("change", function(){
     if(useColorPickerBtn.classList.contains('btn-primary')){
         colorPickerSwitch();
