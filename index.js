@@ -1,4 +1,4 @@
-
+import ColorThief from './node_modules/colorthief/dist/color-thief.mjs'
 const colorThief = new ColorThief();
 var dropdown = document.getElementById('options');
 const colors = [];
@@ -83,7 +83,6 @@ function processColor(paletteCopy,numberOfColors){
         if(currentColor){
             var color = rgbToHex(currentColor[0],currentColor[1],currentColor[2]);
             colors.push(color);
-            console.log(color);
         };
     };
 };
