@@ -1,4 +1,3 @@
-import ColorThief from './node_modules/colorthief/dist/color-thief.mjs'
 const colorThief = new ColorThief();
 var dropdown = document.getElementById('options');
 const colors = [];
