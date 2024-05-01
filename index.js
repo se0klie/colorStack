@@ -1,6 +1,6 @@
 const colorThief = new ColorThief();
 var dropdown = document.getElementById('options');
-const colors = [];
+var colors = [];
 var selectedColor = "#0000ff";
 
 var fromColor = document.getElementById("getFromColor");
@@ -17,6 +17,9 @@ var colorMode = document.getElementById('colorMode');
 
 var colorPicker = document.getElementById('colorPicker');
 
+
+
+//TOGGLE BUTTONS
 function rgbToHex(r, g, b) {
     const componentToHex = (c) => {
         const hex = c.toString(16);
@@ -29,19 +32,21 @@ function rgbToHex(r, g, b) {
 fromColor.addEventListener("click",function(){
     document.getElementById("fromColor").style.display = "block";
     document.getElementById("fromImage").style.display = "none";
+    fromURL.style.display = "none";
 });
 
 fromImage.addEventListener("click", function(){
     document.getElementById("fromColor").style.display = "none";
     document.getElementById("fromImage").style.display = "block";
-    
+    fromURL.style.display = "none";
 });
 
 
-
+//FROM IMAGE
 imageFromUser.addEventListener('change', function(event) {
      // Clear the colors array before populating it with new colors
      colors.splice(0, colors.length);
+     var divOfDivs = document.getElementById("divOfDivs2");
      divOfDivs.replaceChildren();
 
     // Get the selected file from the input element
@@ -90,16 +95,36 @@ function processColor(paletteCopy,numberOfColors){
         };
     };
 };
-const divOfDivs = document.getElementById('divOfDivs2');
+
+
 function createDivs(color){
-    
+    var divOfDivs = document.getElementById('divOfDivs2');
     const div = document.createElement('div');
-    const number = colors.length;
+    div.classList.add("colorDOD");
+    div.textContent = color;
+
+    
+
+    div.addEventListener("click",function(){
+        navigator.clipboard.writeText(color);
+
+        div.textContent = 'Copied!';
+
+        setTimeout(function() {
+            div.textContent = color;
+        }, 1000);
+
+    });
+
+
+    var number = colors.length;
     div.style.background = color;
     div.classList.add("colors");
     divOfDivs.appendChild(div);
     
 }
+
+//FROMCOLOR
 colorMode.addEventListener("change", function(){
     if(useColorPickerBtn.classList.contains('btn-primary')){
         colorPickerSwitch();
@@ -139,13 +164,14 @@ colorMode.addEventListener("change", function(){
 });
 
 // Event listener for "Use Color Picker" button
-    colorPicker.addEventListener("input", function() {
-        selectedColor = colorPicker.value;
-        var colorInput = document.getElementById('colorInput');
-        colorInput.value = selectedColor;
-        generateColors();
+colorPicker.addEventListener("input", function() {
+    selectedColor = colorPicker.value;
+    var colorInput = document.getElementById('colorInput');
+    colorInput.value = selectedColor;
+    generateColors();
 });
 
+//FROM COLOR
 function colorPickerSwitch(){
     useColorPickerBtn.classList.add('btn-primary');
     useHexCodeBtn.classList.remove('btn-primary');
@@ -172,6 +198,25 @@ function colorPickerSwitch(){
         useHexCodeBtn.classList.add('btn-outline-light');
     }
 }
+
+
+
+//FROM URL
+
+// const fromURL = document.getElementById("fromURL");
+// const fromURLButton = document.getElementById("getFromURL");
+// fromURLButton.addEventListener("click", function(){
+//     document.getElementById("fromColor").style.display = "none";
+//     document.getElementById("fromImage").style.display = "none";
+//     fromURL.style.display = "flex";
+// })
+// const submitURL = document.getElementById("submitURL");
+// submitURL.addEventListener("click", function(){
+    
+// });
+
+
+//FROM COLOR
 useColorPickerBtn.addEventListener('click', function() {
     colorPickerSection.style.display = 'flex';
     colorPickerSection.style.gap = '5px';
@@ -182,6 +227,7 @@ useColorPickerBtn.addEventListener('click', function() {
     selectedColor = colorPicker.value;
     generateColors();
 });
+
 colorInput.addEventListener('click',function(){
     var textInput = selectedColor;
     navigator.clipboard.writeText(textInput);
@@ -191,7 +237,7 @@ colorInput.addEventListener('click',function(){
     setTimeout(function() {
         colorInput.value = selectedColor;
     }, 1000);
-})
+});
 
 document.getElementById('generate').addEventListener("click",function(){
     generateColors();
@@ -212,6 +258,7 @@ document.getElementById('generate').addEventListener("click",function(){
     colorSquares[1].style.backgroundColor = colors[1];
     colorSquares[2].style.backgroundColor = colors[2];
 });
+
 var btnColor1 = document.getElementsByClassName('btnColor');
 document.addEventListener('DOMContentLoaded', function() {
     var buttonColors = document.getElementsByClassName('btnColor');
@@ -274,13 +321,15 @@ useHexCodeBtn.addEventListener('click', function() {
 });
 
 
+
 function submitColor() {
     var colorInput = document.getElementById('hexCode').value.trim();
     var colorBox = document.getElementById('colorChosenInput');
-
+    console.log(colorInput);
     // Check if the input is a valid hex color code
     if (/^#[0-9A-F]{6}$/i.test(colorInput)) {
         // Apply the color to the color box
+        
         selectedColor = colorInput;
         colorBox.style.backgroundColor = colorInput;
         generateColors();

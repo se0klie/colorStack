@@ -73,6 +73,18 @@
     display: flex;
     gap: 5px;
 }
+.colorDOD{
+    display: flex; /* Use flexbox layout */
+    align-items: center; 
+    text-align: center;
+    justify-content: center;
+    color : white;
+    font-family: "Londrina Solid", sans-serif;
+    font-size: larger;
+}
+.colorDOD:hover{
+    filter:brightness(80%);
+}
 #fromImage{
     display: flex;
     justify-content: center;
