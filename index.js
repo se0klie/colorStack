@@ -5,6 +5,8 @@ var selectedColor = "#0000ff";
 
 var fromColor = document.getElementById("getFromColor");
 var fromImage = document.getElementById("getFromImage");
+var fromCopy = document.getElementById("getFromClipboard");
+var fromURL = document.getElementById("getFromURL")
 
 var colorPickerSection = document.getElementById('colorPickerSection');
 var hexCodeSection = document.getElementById('hexCodeSection');
@@ -33,12 +35,16 @@ fromColor.addEventListener("click",function(){
     document.getElementById("fromColor").style.display = "block";
     document.getElementById("fromImage").style.display = "none";
     fromURL.style.display = "none";
+
+    
 });
 
 fromImage.addEventListener("click", function(){
     document.getElementById("fromColor").style.display = "none";
     document.getElementById("fromImage").style.display = "block";
     fromURL.style.display = "none";
+    
+
 });
 
 
@@ -124,8 +130,44 @@ function createDivs(color){
     
 }
 
-//FROMCOLOR
+function menuColorSwitch(){
+    if(colorMode.value === 'light'){
+        if(fromColor.classList.contains('btn-outline-light')){
+            fromColor.classList.remove('btn-outline-light');
+            
+        }
+        if(fromImage.classList.contains('btn-outline-light')){
+            fromImage.classList.remove('btn-outline-light');
+        }
+        if(fromURL.classList.contains('btn-outline-light')){
+            fromURL.classList.remove('btn-outline-light');
+        }
+        if(fromCopy.classList.contains('btn-outline-light')){
+            fromCopy.classList.remove('btn-outline-light');
+        }
+        fromURL.classList.add('btn-outline-secondary');
+        fromCopy.classList.add('btn-outline-secondary');
+        fromImage.classList.add('btn-outline-secondary');
+        fromColor.classList.add('btn-outline-secondary');
+    }
+    else{ //class="btn btn-dark"
+        if(fromColor.classList.contains('btn-outline-secondary')){
+            fromColor.classList.remove('btn-outline-secondary');
+            
+        }
+        if(fromImage.classList.contains('btn-outline-secondary')){
+            fromImage.classList.remove('btn-outline-secondary');
+        }
+        fromImage.classList.add("btn-outline-light");
+        fromColor.classList.add("btn-outline-light");
+        fromURL.classList.add("btn-outline-light");
+        fromCopy.classList.add("btn-outline-light");
+    }
+};
+
+//COLOR MODE SWITCH
 colorMode.addEventListener("change", function(){
+    
     if(useColorPickerBtn.classList.contains('btn-primary')){
         colorPickerSwitch();
     }
@@ -135,6 +177,7 @@ colorMode.addEventListener("change", function(){
 
     switch(colorMode.value){
         case 'light':
+            
             document.documentElement.classList.add("light");
             document.body.classList.add("light");
             document.documentElement.classList.remove("dark");
@@ -144,11 +187,13 @@ colorMode.addEventListener("change", function(){
             document.getElementById('head').style.color='#FA7070';
             document.getElementById('colorInput').style.color ='black';
             document.getElementById('hexCode').style.color ='black';
+            menuColorSwitch()
             break;
 
             
 
         case 'dark':
+            
             document.getElementById('head').style.color='#FEFDED';
             document.documentElement.classList.add("dark");
             document.body.classList.add("dark");
@@ -159,6 +204,7 @@ colorMode.addEventListener("change", function(){
 
             document.getElementById('hexCode').style.backgroundColor= '#16213E';
             document.getElementById('colorInput').style.backgroundColor= '#16213E';
+            menuColorSwitch()
             break;
     }
 });
@@ -203,7 +249,7 @@ function colorPickerSwitch(){
 
 //FROM URL
 
-// const fromURL = document.getElementById("fromURL");
+// var getFromURL = document.getElementById("fromURL");
 // const fromURLButton = document.getElementById("getFromURL");
 // fromURLButton.addEventListener("click", function(){
 //     document.getElementById("fromColor").style.display = "none";
