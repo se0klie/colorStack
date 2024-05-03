@@ -154,7 +154,7 @@ getFromClipboard.addEventListener("click", function(){
     document.getElementById("fromImage").style.display = "none";
     getFromURL.style.display = "none";
     fromClipboard.style.display = 'block';
-    image.style.height = "fit-content";
+    image.style.height = "350px";
     clipButton.style.display = "block";
 });
 
