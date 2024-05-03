@@ -1,11 +1,16 @@
+// const { deepCopy } = require("jsprim");
+
 const colorThief = new ColorThief();
 var dropdown = document.getElementById('options');
 var colors = [];
 var selectedColor = "#0000ff";
-
+var getFromURL = document.getElementById("fromURL");
+const numberOfColors = 4;
+var fromClipboard = document.getElementById("fromClipboard");
+var paletteCopy=[];
 var fromColor = document.getElementById("getFromColor");
 var fromImage = document.getElementById("getFromImage");
-var fromCopy = document.getElementById("getFromClipboard");
+var getFromClipboard = document.getElementById("getFromClipboard");
 var fromURL = document.getElementById("getFromURL")
 
 var colorPickerSection = document.getElementById('colorPickerSection');
@@ -34,16 +39,14 @@ function rgbToHex(r, g, b) {
 fromColor.addEventListener("click",function(){
     document.getElementById("fromColor").style.display = "block";
     document.getElementById("fromImage").style.display = "none";
-    fromURL.style.display = "none";
-
+    fromClipboard.style.display = 'none';
     
 });
 
 fromImage.addEventListener("click", function(){
     document.getElementById("fromColor").style.display = "none";
     document.getElementById("fromImage").style.display = "block";
-    fromURL.style.display = "none";
-    
+    fromClipboard.style.display = 'none';
 
 });
 
@@ -57,7 +60,6 @@ imageFromUser.addEventListener('change', function(event) {
 
     // Get the selected file from the input element
     const file = event.target.files[0];
-    const numberOfColors = 4;
 
    
 
@@ -78,10 +80,10 @@ imageFromUser.addEventListener('change', function(event) {
             imageElement.onload = function() {
                 imageElement.style.display = "flex";
                 // Once the image has loaded, pass it to ColorThief to get the palette
-                const paletteCopy = colorThief.getPalette(imageElement, numberOfColors); // Get a palette of 4 colors
+                paletteCopy = colorThief.getPalette(imageElement, numberOfColors); // Get a palette of 4 colors
                 
                 // Copy the paletteCopy array to the colors array
-                processColor(paletteCopy,numberOfColors);
+                processColor(paletteCopy,numberOfColors,2);
                 
             };
             
@@ -91,20 +93,27 @@ imageFromUser.addEventListener('change', function(event) {
 });
 
 
-function processColor(paletteCopy,numberOfColors){
+function processColor(paletteCopy,numberOfColors,divNum){
     for(let i=0;i<=numberOfColors;i++){
         let currentColor = paletteCopy[i];
         if(currentColor){
             var color = rgbToHex(currentColor[0],currentColor[1],currentColor[2]);
             colors.push(color);
-            createDivs(color);
+            createDivs(color,divNum);
         };
     };
 };
 
 
-function createDivs(color){
-    var divOfDivs = document.getElementById('divOfDivs2');
+function createDivs(color,divNum){
+    var divOfDivs;
+    if(divNum === 2){
+        divOfDivs = "divOfDivs2";
+    }
+    else if (divNum === 3){
+        divOfDivs = "divOfDivs3";
+    }
+    var divID = document.getElementById(divOfDivs);
     const div = document.createElement('div');
     div.classList.add("colorDOD");
     div.textContent = color;
@@ -126,31 +135,152 @@ function createDivs(color){
     var number = colors.length;
     div.style.background = color;
     div.classList.add("colors");
-    divOfDivs.appendChild(div);
+    divID.appendChild(div);
     
+}
+
+
+
+
+
+//from CLIPBOARD
+
+
+getFromClipboard.addEventListener("click", function(){
+    document.getElementById("fromColor").style.display = "none";
+    document.getElementById("fromImage").style.display = "none";
+    getFromURL.style.display = "none";
+    fromClipboard.style.display = 'block';
+    image.style.height = "fit-content";
+    clipButton.style.display = "block";
+});
+
+
+var ClipboardUtils = new function() {
+    var permissions = {
+        'image/bmp': true,
+        'image/gif': true,
+        'image/png': true,
+        'image/jpeg': true,
+        'image/tiff': true
+    };
+    function getType(types) {
+        for (var j = 0; j < types.length; ++j) {
+            var type = types[j];
+            if (permissions[type]) {
+                return type;
+            }
+        }
+        return null;
+    }
+    function getItem(items) {
+        for (var i = 0; i < items.length; ++i) {
+            var item = items[i];
+            if(item) {
+                var type = getType(item.types);
+                if(type) {
+                    return item.getType(type);
+                }
+            }
+        }
+        return null;
+    }
+    function readFile(file, callback) {
+        if (window.FileReader) {
+            var reader = new FileReader();
+            reader.onload = function() {
+                callback(reader.result, null);
+            };
+            reader.onerror = function() {
+                callback(null, 'Incorrect file.');
+            };
+            reader.readAsDataURL(file);
+        } else {
+            callback(null, 'File API is not supported.');
+        }
+    }
+    this.readImage = function(callback) {
+        if (navigator.clipboard) {
+            var promise = navigator.clipboard.read();
+            promise
+                .then(function(items) {
+                    var promise = getItem(items);
+                    if (promise == null) {
+                        callback(null, null);
+                          return;
+                    }
+                    promise
+                          .then(function(result) {
+                              readFile(result, callback);
+                        })
+                          .catch(function(error) {
+                              callback(null, error || 'Clipboard reading error.');
+                        });
+                })
+                .catch(function(error) {
+                    callback(null, error || 'Clipboard reading error.');
+                });
+        } else {
+            callback(null, 'Clipboard API is not supported.');
+        }
+    };
+};
+
+// Usage example:
+
+var image = document.getElementById("image");
+var clipButton = document.getElementById("clipButton");
+
+function pasteImageBitmap() {
+    ClipboardUtils.readImage(function(data, error) {
+        if (error) {
+            alert('No image displayed. First, copy it to clipboard.');
+            return;
+        }
+        if (data) {
+            image.src = data;
+            paletteCopy = [];
+            image.onload = function() {
+                // Once the image has loaded, get the palette using ColorThief
+                paletteCopy = colorThief.getPalette(image, numberOfColors);
+                // Process the paletteCopy array
+                processColor(paletteCopy, numberOfColors, 3);
+                return;
+
+            };
+
+        }
+        else{
+            alert('No image displayed. First, copy it to clipboard.');
+        }
+    });
 }
 
 function menuColorSwitch(){
     if(colorMode.value === 'light'){
+        getFromClipboard.classList.add('btn-outline-secondary');
+        fromImage.classList.add('btn-outline-secondary');
+        fromColor.classList.add('btn-outline-secondary');
         if(fromColor.classList.contains('btn-outline-light')){
             fromColor.classList.remove('btn-outline-light');
             
         }
         if(fromImage.classList.contains('btn-outline-light')){
             fromImage.classList.remove('btn-outline-light');
+        
         }
-        if(fromURL.classList.contains('btn-outline-light')){
-            fromURL.classList.remove('btn-outline-light');
+        if(getFromClipboard.classList.contains('btn-outline-light')){
+            getFromClipboard.classList.remove('btn-outline-light');
         }
-        if(fromCopy.classList.contains('btn-outline-light')){
-            fromCopy.classList.remove('btn-outline-light');
-        }
-        fromURL.classList.add('btn-outline-secondary');
-        fromCopy.classList.add('btn-outline-secondary');
-        fromImage.classList.add('btn-outline-secondary');
-        fromColor.classList.add('btn-outline-secondary');
+        // fromURL.classList.add('btn-outline-secondary');
+        
     }
     else{ //class="btn btn-dark"
+        fromImage.classList.add("btn-outline-light");
+        fromColor.classList.add("btn-outline-light");
+        // fromURL.classList.add("btn-outline-light");
+        getFromClipboard.classList.add("btn-outline-light");
+
         if(fromColor.classList.contains('btn-outline-secondary')){
             fromColor.classList.remove('btn-outline-secondary');
             
@@ -158,10 +288,10 @@ function menuColorSwitch(){
         if(fromImage.classList.contains('btn-outline-secondary')){
             fromImage.classList.remove('btn-outline-secondary');
         }
-        fromImage.classList.add("btn-outline-light");
-        fromColor.classList.add("btn-outline-light");
-        fromURL.classList.add("btn-outline-light");
-        fromCopy.classList.add("btn-outline-light");
+        if(getFromClipboard.classList.contains('btn-outline-secondary')){
+            getFromClipboard.classList.remove('btn-outline-secondary');
+        }
+        
     }
 };
 
@@ -247,18 +377,64 @@ function colorPickerSwitch(){
 
 
 
-//FROM URL
+// // FROM URL
+// var imgFromInput = document.getElementById("imageFromURL");
+// function testImage(url, callback, timeout) {
+//     timeout = timeout || 5000;
+//     var timedOut = false, timer;
+    
+//     imgFromInput.onerror = imgFromInput.onabort = function() {
+//         if (!timedOut) {
+//             clearTimeout(timer);
+//             callback("error");
+//         }
+//     };
+//     imgFromInput.onload = function() {
+//         if (!timedOut) {
+//             clearTimeout(timer);
+//             callback("success");
+//         }
+//     };
+    
+//     imgFromInput.style.display = "flex";
+//     imgFromInput.crossOririn = 'Anonymous';
+//     let proxyServer = 'https://images1-focus-opensocial.googleusercontent.com/gadgets/proxy?container=focus&refresh=2592000&url=';
+//     imgFromInput.src = proxyServer + encodeURIComponent(url);
 
-// var getFromURL = document.getElementById("fromURL");
+
+
+//     var paletteCopy = colorThief.getPalette(imgFromInput,numberOfColors);
+    
+
+//     processColor(paletteCopy,numberOfColors,3);
+
+//     timer = setTimeout(function() {
+//         timedOut = true;
+//         // reset .src to invalid URL so it stops previous
+//         // loading, but doesn't trigger new load
+//         imgFromInput.src = "#";
+//         callback("timeout");
+//     }, timeout); 
+// }
+
+// function record(result) {
+//     if(result!=="success"){
+//         alert("Please, insert a valid URL.");
+//     }
+// };
+
+// var inputURL = document.getElementById("inputURL");
 // const fromURLButton = document.getElementById("getFromURL");
 // fromURLButton.addEventListener("click", function(){
 //     document.getElementById("fromColor").style.display = "none";
 //     document.getElementById("fromImage").style.display = "none";
-//     fromURL.style.display = "flex";
-// })
+//     getFromURL.style.display = "flex";
+// });
+
 // const submitURL = document.getElementById("submitURL");
 // submitURL.addEventListener("click", function(){
-    
+//     var url = inputURL.value.trim();
+//     testImage(url, record);
 // });
 
 

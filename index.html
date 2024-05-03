@@ -22,8 +22,8 @@
             <div style="display: flex; gap:5px; justify-content: center;">
                 <button class="btn btn-outline-secondary"id="getFromColor">Get from color</button>
                 <button class="btn btn-outline-secondary" id="getFromImage">Get from image</button>
-                <button class="btn btn-outline-secondary" id="getFromURL">Get from URL (coming soon)</button>
-                <button class="btn btn-outline-secondary" id="getFromClipboard">Get from clipboard (coming soon)</button>
+                <!-- <button class="btn btn-outline-secondary" id="getFromURL">Get from URL (coming soon)</button> -->
+                <button class="btn btn-outline-secondary" id="getFromClipboard">Get from clipboard</button>
             </div>
         </div>
         
@@ -91,10 +91,19 @@
     <div id="fromURL" style="display: none; padding: 8px;gap: 8px;">
         <input type="text" id="inputURL" style="height: fit-content;">
         <button id="submitURL" type="submit" style="height: fit-content;">Submit</button>
-        <img id="imageFromURL" src="#">
-        <div id="divOfDivs3" class="divOfDivs"></div>
+        
     </div>
+    <!-- <img id="imageFromURL" src="#" style="display: none;">
+        <div id="divOfDivs3" class="divOfDivs"></div> -->
     <br>
+
+    <div id="fromClipboard" style="display: none;">
+        <img id="image" style="border: 1px solid silver; width: 320px; height: 240px" />
+        <div id="divOfDivs3" class="divOfDivs"></div>
+
+    </div>
+        <button style="display: none;" id="clipButton" class='btn-outline-secondary' onclick="pasteImageBitmap()">Paste image bitmap from clipboard</button>
+
         <footer style="display: flex; justify-content: center;"> 
             <h6 style="justify-content: center; align-self: center; align-content: center;">© All rights reserved : se0klie on <a href="https://github.com/se0klie">github</a>
             </h6>
