@@ -40,6 +40,8 @@ fromColor.addEventListener("click",function(){
     document.getElementById("fromColor").style.display = "block";
     document.getElementById("fromImage").style.display = "none";
     fromClipboard.style.display = 'none';
+    clipButton.style.display= 'none';
+    
     
 });
 
@@ -47,6 +49,7 @@ fromImage.addEventListener("click", function(){
     document.getElementById("fromColor").style.display = "none";
     document.getElementById("fromImage").style.display = "block";
     fromClipboard.style.display = 'none';
+    clipButton.style.display= 'none';
 
 });
 
