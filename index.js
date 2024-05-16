@@ -263,6 +263,7 @@ getFromClipboard.addEventListener("click", function(){
     image.style.height = "350px";
     clipButton.style.display = "block";
     divRGBtoHEX.style.display = 'none';
+    divHexRGB.style.display = 'none';
 });
 
 
