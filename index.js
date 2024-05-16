@@ -24,6 +24,9 @@ var colorMode = document.getElementById('colorMode');
 
 var colorPicker = document.getElementById('colorPicker');
 
+function emptyColors(){
+    colors.splice(0, colors.length);
+}
 
 
 //TOGGLE BUTTONS
@@ -37,6 +40,7 @@ function rgbToHex(r, g, b) {
 
 
 fromColor.addEventListener("click",function(){
+    emptyColors();
     document.getElementById("fromColor").style.display = "block";
     document.getElementById("fromImage").style.display = "none";
     fromClipboard.style.display = 'none';
@@ -46,6 +50,7 @@ fromColor.addEventListener("click",function(){
 });
 
 fromImage.addEventListener("click", function(){
+    emptyColors();
     document.getElementById("fromColor").style.display = "none";
     document.getElementById("fromImage").style.display = "block";
     fromClipboard.style.display = 'none';
@@ -57,7 +62,7 @@ fromImage.addEventListener("click", function(){
 //FROM IMAGE
 imageFromUser.addEventListener('change', function(event) {
      // Clear the colors array before populating it with new colors
-     colors.splice(0, colors.length);
+     emptyColors();
      var divOfDivs = document.getElementById("divOfDivs2");
      divOfDivs.replaceChildren();
 
@@ -97,6 +102,7 @@ imageFromUser.addEventListener('change', function(event) {
 
 
 function processColor(paletteCopy,numberOfColors,divNum){
+    emptyColors();
     for(let i=0;i<=numberOfColors;i++){
         let currentColor = paletteCopy[i];
         if(currentColor){
@@ -109,14 +115,17 @@ function processColor(paletteCopy,numberOfColors,divNum){
 
 
 function createDivs(color,divNum){
+    emptyColors();
     var divOfDivs;
     if(divNum === 2){
         divOfDivs = "divOfDivs2";
     }
     else if (divNum === 3){
         divOfDivs = "divOfDivs3";
+        
     }
     var divID = document.getElementById(divOfDivs);
+        
     const div = document.createElement('div');
     div.classList.add("colorDOD");
     div.textContent = color;
@@ -135,12 +144,11 @@ function createDivs(color,divNum){
     });
 
 
-    var number = colors.length;
     div.style.background = color;
     div.classList.add("colors");
     divID.appendChild(div);
     
-}
+};
 
 
 
@@ -150,9 +158,9 @@ function createDivs(color,divNum){
 
 
 getFromClipboard.addEventListener("click", function(){
+    emptyColors();
     document.getElementById("fromColor").style.display = "none";
     document.getElementById("fromImage").style.display = "none";
-    getFromURL.style.display = "none";
     fromClipboard.style.display = 'block';
     image.style.height = "350px";
     clipButton.style.display = "block";
@@ -160,6 +168,7 @@ getFromClipboard.addEventListener("click", function(){
 
 
 var ClipboardUtils = new function() {
+    
     var permissions = {
         'image/bmp': true,
         'image/gif': true,
@@ -233,8 +242,11 @@ var ClipboardUtils = new function() {
 
 var image = document.getElementById("image");
 var clipButton = document.getElementById("clipButton");
+var divOfDivs3 = document.getElementById("divOfDivs3");
 
 function pasteImageBitmap() {
+    divOfDivs3.replaceChildren();
+    paletteCopy=[];
     ClipboardUtils.readImage(function(data, error) {
         if (error) {
             alert('No image displayed. First, copy it to clipboard.');
@@ -244,6 +256,7 @@ function pasteImageBitmap() {
             image.src = data;
             paletteCopy = [];
             image.onload = function() {
+                
                 // Once the image has loaded, get the palette using ColorThief
                 paletteCopy = colorThief.getPalette(image, numberOfColors);
                 // Process the paletteCopy array
@@ -379,66 +392,6 @@ function colorPickerSwitch(){
 }
 
 
-
-// // FROM URL
-// var imgFromInput = document.getElementById("imageFromURL");
-// function testImage(url, callback, timeout) {
-//     timeout = timeout || 5000;
-//     var timedOut = false, timer;
-    
-//     imgFromInput.onerror = imgFromInput.onabort = function() {
-//         if (!timedOut) {
-//             clearTimeout(timer);
-//             callback("error");
-//         }
-//     };
-//     imgFromInput.onload = function() {
-//         if (!timedOut) {
-//             clearTimeout(timer);
-//             callback("success");
-//         }
-//     };
-    
-//     imgFromInput.style.display = "flex";
-//     imgFromInput.crossOririn = 'Anonymous';
-//     let proxyServer = 'https://images1-focus-opensocial.googleusercontent.com/gadgets/proxy?container=focus&refresh=2592000&url=';
-//     imgFromInput.src = proxyServer + encodeURIComponent(url);
-
-
-
-//     var paletteCopy = colorThief.getPalette(imgFromInput,numberOfColors);
-    
-
-//     processColor(paletteCopy,numberOfColors,3);
-
-//     timer = setTimeout(function() {
-//         timedOut = true;
-//         // reset .src to invalid URL so it stops previous
-//         // loading, but doesn't trigger new load
-//         imgFromInput.src = "#";
-//         callback("timeout");
-//     }, timeout); 
-// }
-
-// function record(result) {
-//     if(result!=="success"){
-//         alert("Please, insert a valid URL.");
-//     }
-// };
-
-// var inputURL = document.getElementById("inputURL");
-// const fromURLButton = document.getElementById("getFromURL");
-// fromURLButton.addEventListener("click", function(){
-//     document.getElementById("fromColor").style.display = "none";
-//     document.getElementById("fromImage").style.display = "none";
-//     getFromURL.style.display = "flex";
-// });
-
-// const submitURL = document.getElementById("submitURL");
-// submitURL.addEventListener("click", function(){
-//     var url = inputURL.value.trim();
-//     testImage(url, record);
-// });
 
 
 //FROM COLOR
