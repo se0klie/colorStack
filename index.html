@@ -100,18 +100,18 @@
 
 
             
-    <div id="hexToRgbDiv" style="display: none; text-align: center;">
+    <div id="hexToRgbDiv" style="display: none; margin: 0 auto; text-align: center; justify-content: center;">
         <input id="hexInput" type="text" placeholder="HEX CODE">
         <button type="submit" onclick="convertHex()" style="height: fit-content;">Submit HEX code.</button>
         <br>
         <div style="display: inline-block; text-align: center;">
-            <div style="display: inline-block;" id="colorChosenRGB" class="colorChosenCircle"></div>
+            <div style="display: inline-block; " id="colorChosenRGB" class="colorChosenCircle"></div>
             <input type="text" id="showRGB" style="display: inline-block; height: fit-content;" readonly> 
         </div>
 
         </div>
 
-    <div id="rgbToHexDiv" style="display: none; text-align: center;">
+    <div id="rgbToHexDiv" style="display: none; text-align: center; justify-content: center;">
         <div id="redgreenblue" style="display:none">
             <p style="display: inline-block; align-items: center;">Enter the RGB code: </p>
             <input type="text" placeholder="red" id="red1">
@@ -119,7 +119,7 @@
             <input type="text" placeholder="blue" id="blue1">
             <br>
             <div style="display: inline-block; text-align: center;">
-                <button type="submit" style="padding: 5px;" onclick="RGBtoHEX()">Submit</button>
+                <button type="submit" style="margin: 8px;" onclick="RGBtoHEX()">Submit</button>
                 <div style="display: grid; grid-template-columns: min-content max-content; gap: 5px;">
                 <div id="colorChosenHEX"></div>
                 <input type="text" id="showHEX" style="height: fit-content; width: fit-content;" readonly> 
