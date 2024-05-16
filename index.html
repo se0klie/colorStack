@@ -19,13 +19,13 @@
                 <option value="light" class="light">Light</option>
                 <option value="dark" class="dark">Dark</option>
             </select>
-            <div style="display: flex; gap:5px; justify-content: center;">
-                <button class="btn btn-outline-secondary"id="getFromColor">Get from color</button>
-                <button class="btn btn-outline-secondary" id="getFromImage">Get from image</button>
-                <button class="btn btn-outline-secondary" id="getFromClipboard">Get from clipboard</button>
-                <button class="btn btn-outline-secondary" id="hexToRgb">from HEX to RGB</button>
-                <button class="btn btn-outline-secondary" id="rgbToHex">from RGB to HEX</button>
-            </div>
+        </div>
+        <div style="display: flex; gap:5px;padding:  5px;; justify-content: center;">
+            <button class="btn btn-outline-secondary"id="getFromColor">Get from color</button>
+            <button class="btn btn-outline-secondary" id="getFromImage">Get from image</button>
+            <button class="btn btn-outline-secondary" id="getFromClipboard">Get from clipboard</button>
+            <button class="btn btn-outline-secondary" id="hexToRgb">from HEX to RGB</button>
+            <button class="btn btn-outline-secondary" id="rgbToHex">from RGB to HEX</button>
         </div>
         
 
@@ -100,24 +100,34 @@
 
 
             
-    <div id="hexToRgbDiv" style="display: none;">
+    <div id="hexToRgbDiv" style="display: none; text-align: center;">
         <input id="hexInput" type="text" placeholder="HEX CODE">
         <button type="submit" onclick="convertHex()" style="height: fit-content;">Submit HEX code.</button>
-        <div id="colorChosenRGB" class="colorChosenCircle"></div>
-        <input type="text" id="showRGB" style="height: fit-content;" readonly> 
-    </div>
+        <br>
+        <div style="display: inline-block; text-align: center;">
+            <div style="display: inline-block;" id="colorChosenRGB" class="colorChosenCircle"></div>
+            <input type="text" id="showRGB" style="display: inline-block; height: fit-content;" readonly> 
+        </div>
 
-    <div id="rgbToHexDiv" style="display: none;">
-        <p>Enter the RGB code: </p>
+        </div>
+
+    <div id="rgbToHexDiv" style="display: none; text-align: center;">
         <div id="redgreenblue" style="display:none">
+            <p style="display: inline-block; align-items: center;">Enter the RGB code: </p>
             <input type="text" placeholder="red" id="red1">
             <input type="text" placeholder="green" id="green1">
             <input type="text" placeholder="blue" id="blue1">
-            <button type="submit" onclick="RGBtoHEX()">Submit</button>
+            <br>
+            <div style="display: inline-block; text-align: center;">
+                <button type="submit" style="padding: 5px;" onclick="RGBtoHEX()">Submit</button>
+                <div style="display: grid; grid-template-columns: min-content max-content; gap: 5px;">
+                <div id="colorChosenHEX"></div>
+                <input type="text" id="showHEX" style="height: fit-content; width: fit-content;" readonly> 
+            </div>
+            </div>
+         </div>
+        <br>
         </div>
-        <div id="colorChosenHEX"></div>
-        <input type="text" id="showHEX" style="height: fit-content;" readonly> 
-    </div>
     
         <footer style="display: flex; justify-content: center;"> 
             <h6 style="justify-content: center; align-self: center; align-content: center;">© All rights reserved : se0klie on <a href="https://github.com/se0klie">github</a>

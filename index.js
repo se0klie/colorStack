@@ -39,7 +39,7 @@ fromHEXtoRGB.addEventListener("click", function(){
     fromClipboard.style.display = 'none';
     clipButton.style.display= 'none';
     divRGBtoHEX.style.display = 'none';
-    divHexRGB.style.display = 'flex';
+    divHexRGB.style.display = 'block';
 
 });
 function hexToRgb() {
@@ -66,6 +66,7 @@ var circleRGB = document.getElementById("colorChosenRGB");
     if (rgb) {
       document.getElementById("showRGB").value = "RGB code: " + rgb.r + ", " + rgb.g + ", " + rgb.b;
       circleRGB.style.background = hex;
+      
     } else {
       alert("Invalid HEX code");
     }
@@ -114,10 +115,10 @@ fromRGBtoHEX.addEventListener("click", function(){
     document.getElementById("fromImage").style.display = "none";
     fromClipboard.style.display = 'none';
     clipButton.style.display= 'none';
-    divRGBtoHEX.style.display = 'flex';
-    gridRGB.style.display = 'grid';
+    divRGBtoHEX.style.display = 'block';
+    gridRGB.style.display = 'inline-block';
     gridRGB.style.gap = '5px';
-    gridRGB.style.gridTemplateColumns = 'fit-content fit-content fit-content';
+    gridRGB.style.gridTemplateColumns = 'auto auto auto';
     divHexRGB.style.display = 'none';
 });
 
@@ -263,6 +264,7 @@ getFromClipboard.addEventListener("click", function(){
     image.style.height = "350px";
     clipButton.style.display = "block";
     divRGBtoHEX.style.display = 'none';
+    divHexRGB.style.display = 'none';
 });
 
 
