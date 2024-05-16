@@ -197,6 +197,34 @@ html{
     width: 100px;
     border-radius: 10px;
 }
+#hexToRgbDiv{
+    align-items: center;
+    gap: 5px;
+}
+#rgbToHexDiv{
+    align-items: center;
+    gap:5px;
+}
+#colorChosenHEX{
+    border-radius: 50%;
+    background-color: white;
+    height: 30px;
+    margin: 5px;
+    width: 30px;
+    border-color:gray;
+    border-width: 3px;
+    border-style: solid;
+}
+#colorChosenRGB{
+    border-radius: 50%;
+    background-color: white;
+    height: 30px;
+    margin: 5px;
+    width: 30px;
+    border-color:gray;
+    border-width: 3px;
+    border-style: solid;
+}
 .grid-container{
     display: grid;
     grid-template-columns: auto auto auto;

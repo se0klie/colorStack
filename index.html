@@ -22,8 +22,9 @@
             <div style="display: flex; gap:5px; justify-content: center;">
                 <button class="btn btn-outline-secondary"id="getFromColor">Get from color</button>
                 <button class="btn btn-outline-secondary" id="getFromImage">Get from image</button>
-                <!-- <button class="btn btn-outline-secondary" id="getFromURL">Get from URL (coming soon)</button> -->
                 <button class="btn btn-outline-secondary" id="getFromClipboard">Get from clipboard</button>
+                <button class="btn btn-outline-secondary" id="hexToRgb">from HEX to RGB</button>
+                <button class="btn btn-outline-secondary" id="rgbToHex">from RGB to HEX</button>
             </div>
         </div>
         
@@ -94,8 +95,30 @@
         <div id="divOfDivs3" class="divOfDivs"></div>
 
     </div>
+
         <button style="display: none;" id="clipButton" class='btn-outline-secondary' onclick="pasteImageBitmap()">Paste image bitmap from clipboard</button>
 
+
+            
+    <div id="hexToRgbDiv" style="display: none;">
+        <input id="hexInput" type="text" placeholder="HEX CODE">
+        <button type="submit" onclick="convertHex()" style="height: fit-content;">Submit HEX code.</button>
+        <div id="colorChosenRGB" class="colorChosenCircle"></div>
+        <input type="text" id="showRGB" style="height: fit-content;" readonly> 
+    </div>
+
+    <div id="rgbToHexDiv" style="display: none;">
+        <p>Enter the RGB code: </p>
+        <div id="redgreenblue" style="display:none">
+            <input type="text" placeholder="red" id="red1">
+            <input type="text" placeholder="green" id="green1">
+            <input type="text" placeholder="blue" id="blue1">
+            <button type="submit" onclick="RGBtoHEX()">Submit</button>
+        </div>
+        <div id="colorChosenHEX"></div>
+        <input type="text" id="showHEX" style="height: fit-content;" readonly> 
+    </div>
+    
         <footer style="display: flex; justify-content: center;"> 
             <h6 style="justify-content: center; align-self: center; align-content: center;">© All rights reserved : se0klie on <a href="https://github.com/se0klie">github</a>
             </h6>

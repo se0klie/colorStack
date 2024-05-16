@@ -1,5 +1,6 @@
 // const { deepCopy } = require("jsprim");
 
+
 const colorThief = new ColorThief();
 var dropdown = document.getElementById('options');
 var colors = [];
@@ -28,6 +29,47 @@ function emptyColors(){
     colors.splice(0, colors.length);
 }
 
+var fromHEXtoRGB = document.getElementById("hexToRgb");
+var divHexRGB = document.getElementById("hexToRgbDiv");
+
+fromHEXtoRGB.addEventListener("click", function(){
+    emptyColors();
+    document.getElementById("fromColor").style.display = "none";
+    document.getElementById("fromImage").style.display = "none";
+    fromClipboard.style.display = 'none';
+    clipButton.style.display= 'none';
+    divRGBtoHEX.style.display = 'none';
+    divHexRGB.style.display = 'flex';
+
+});
+function hexToRgb() {
+    let hex = document.getElementById("hexInput").value;
+    // Expand shorthand form (e.g. "03F") to full form (e.g. "0033FF")
+    const shorthandRegex = /^#?([a-f\d])([a-f\d])([a-f\d])$/;
+    hex = hex.replace(shorthandRegex, function(m, r, g, b) {
+      return r + r + g + g + b + b;
+    });
+
+    var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+    return result ? {
+      r: parseInt(result[1], 16),
+      g: parseInt(result[2], 16),
+      b: parseInt(result[3], 16),
+      
+    } : null;
+  }
+var circleRGB = document.getElementById("colorChosenRGB");
+
+  function convertHex() {
+    let hex = document.getElementById("hexInput").value;
+    let rgb = hexToRgb(hex);
+    if (rgb) {
+      document.getElementById("showRGB").value = "RGB code: " + rgb.r + ", " + rgb.g + ", " + rgb.b;
+      circleRGB.style.background = hex;
+    } else {
+      alert("Invalid HEX code");
+    }
+  }
 
 //TOGGLE BUTTONS
 function rgbToHex(r, g, b) {
@@ -45,7 +87,8 @@ fromColor.addEventListener("click",function(){
     document.getElementById("fromImage").style.display = "none";
     fromClipboard.style.display = 'none';
     clipButton.style.display= 'none';
-    
+    divRGBtoHEX.style.display = 'none';
+    divHexRGB.style.display = 'none';
     
 });
 
@@ -55,9 +98,64 @@ fromImage.addEventListener("click", function(){
     document.getElementById("fromImage").style.display = "block";
     fromClipboard.style.display = 'none';
     clipButton.style.display= 'none';
-
+    divRGBtoHEX.style.display = 'none';
+    divHexRGB.style.display = 'none';
 });
 
+
+var fromRGBtoHEX = document.getElementById("rgbToHex");
+
+var divRGBtoHEX = document.getElementById("rgbToHexDiv");
+var gridRGB = document.getElementById("redgreenblue");
+
+fromRGBtoHEX.addEventListener("click", function(){
+    emptyColors();
+    document.getElementById("fromColor").style.display = "none";
+    document.getElementById("fromImage").style.display = "none";
+    fromClipboard.style.display = 'none';
+    clipButton.style.display= 'none';
+    divRGBtoHEX.style.display = 'flex';
+    gridRGB.style.display = 'grid';
+    gridRGB.style.gap = '5px';
+    gridRGB.style.gridTemplateColumns = 'fit-content fit-content fit-content';
+    divHexRGB.style.display = 'none';
+});
+
+function copyColorToClip(selectedColor, showIn){
+    var textInput = selectedColor;
+    navigator.clipboard.writeText(textInput);
+
+    showIn.value = 'Copied!';
+
+    setTimeout(function() {
+        showIn.value = selectedColor;
+    }, 1000);
+};
+
+let colorChosenHEX = document.getElementById("colorChosenHEX");
+
+function RGBtoHEX(){
+    var red1 = document.getElementById("red1").value;
+    var green1 = document.getElementById("green1").value;
+    var blue1 = document.getElementById("blue1").value;
+     
+    if (red1 && green1 && blue1){
+        var r = parseInt(red1);
+        var g = parseInt(green1);
+        var b = parseInt(blue1);
+
+        var hexCODE = rgbToHex(r,g,b);
+        let showHEX = document.getElementById("showHEX");
+        colorChosenHEX.style.background = hexCODE;
+        showHEX.value = hexCODE;
+        
+        colorChosenHEX.addEventListener("click", copyColorToClip(hexCODE, showHEX));
+        
+    }else{
+        alert("Please insert all required colors.");
+    }
+    
+};
 
 //FROM IMAGE
 imageFromUser.addEventListener('change', function(event) {
@@ -164,6 +262,7 @@ getFromClipboard.addEventListener("click", function(){
     fromClipboard.style.display = 'block';
     image.style.height = "350px";
     clipButton.style.display = "block";
+    divRGBtoHEX.style.display = 'none';
 });
 
 
@@ -277,6 +376,12 @@ function menuColorSwitch(){
         getFromClipboard.classList.add('btn-outline-secondary');
         fromImage.classList.add('btn-outline-secondary');
         fromColor.classList.add('btn-outline-secondary');
+        fromHEXtoRGB.classList.add('btn-outline-secondary');
+        fromRGBtoHEX.classList.add('btn-outline-secondary')
+
+        if(fromRGBtoHEX.classList.contains('btn-outline-light')){
+            fromRGBtoHEX.classList.remove('btn-outline-light')
+        }
         if(fromColor.classList.contains('btn-outline-light')){
             fromColor.classList.remove('btn-outline-light');
             
@@ -288,18 +393,23 @@ function menuColorSwitch(){
         if(getFromClipboard.classList.contains('btn-outline-light')){
             getFromClipboard.classList.remove('btn-outline-light');
         }
-        // fromURL.classList.add('btn-outline-secondary');
+        if(fromHEXtoRGB.classList.contains('btn-outline-light')){
+            fromHEXtoRGB.classList.remove('btn-outline-light');
+        }
         
     }
     else{ //class="btn btn-dark"
         fromImage.classList.add("btn-outline-light");
         fromColor.classList.add("btn-outline-light");
-        // fromURL.classList.add("btn-outline-light");
         getFromClipboard.classList.add("btn-outline-light");
+        fromHEXtoRGB.classList.add("btn-outline-light");
+        fromRGBtoHEX.classList.add("btn-outline-light");
 
+        if(fromRGBtoHEX.classList.contains('btn-outline-secondary')){
+            fromRGBtoHEX.classList.remove('btn-outline-secondary')
+        }
         if(fromColor.classList.contains('btn-outline-secondary')){
-            fromColor.classList.remove('btn-outline-secondary');
-            
+            fromColor.classList.remove('btn-outline-secondary')
         }
         if(fromImage.classList.contains('btn-outline-secondary')){
             fromImage.classList.remove('btn-outline-secondary');
@@ -307,7 +417,9 @@ function menuColorSwitch(){
         if(getFromClipboard.classList.contains('btn-outline-secondary')){
             getFromClipboard.classList.remove('btn-outline-secondary');
         }
-        
+        if(fromHEXtoRGB.classList.contains('btn-outline-secondary')){
+            fromHEXtoRGB.classList.remove('btn-outline-secondary');
+        }
     }
 };
 
@@ -408,13 +520,7 @@ useColorPickerBtn.addEventListener('click', function() {
 
 colorInput.addEventListener('click',function(){
     var textInput = selectedColor;
-    navigator.clipboard.writeText(textInput);
-
-    colorInput.value = 'Copied!';
-
-    setTimeout(function() {
-        colorInput.value = selectedColor;
-    }, 1000);
+    copyColorToClip(textInput,colorInput);
 });
 
 document.getElementById('generate').addEventListener("click",function(){
