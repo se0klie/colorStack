@@ -111,7 +111,6 @@ input{
     grid-template-columns:auto 100px;
     align-self: center;
     justify-content: center none;
-    /* align-items: center; */
 }
 
 #colorMode{
