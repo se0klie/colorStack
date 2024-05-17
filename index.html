@@ -100,12 +100,11 @@
 
 
             
-    <div id="hexToRgbDiv" style="display: none; margin: 0 auto; text-align: center; justify-content: center;">
+    <div id="hexToRgbDiv" style="display: none; text-align: center;">
         <input id="hexInput" type="text" placeholder="HEX CODE">
-        <button type="submit" onclick="convertHex()" style="height: fit-content;">Submit HEX code.</button>
-        <br>
-        <div style="display: inline-block; text-align: center;">
-            <div style="display: inline-block; " id="colorChosenRGB" class="colorChosenCircle"></div>
+        <button type="submit" onclick="convertHex()" style="height: fit-content;">Submit HEX code.</button>        <br>
+        <div style="justify-content: center; gap:5px; margin: 5px; display: grid; grid-template-columns: min-content min-content;">
+            <div style="display: inline-block; text-align: center; justify-content: center;" id="colorChosenRGB" class="colorChosenCircle"></div>
             <input type="text" id="showRGB" style="display: inline-block; height: fit-content;" readonly> 
         </div>
 
